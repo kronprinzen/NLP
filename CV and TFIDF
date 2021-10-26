@@ -1,0 +1,28 @@
+import pandas as pd
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+pd.options.display.max_columns = 200
+
+# list of text documents
+text1 = "Leading the charge is Pok, who has spent over 20 years of his career with SIA. Pok first started out in logistics, before moving into internal audit and eventually sales and merchandising. Or as he summarised, The first part of my career, I spent money, then went into checking how people spend money, and the rest of the time, figuring out how to earn that money back."
+text3 = "At the time, what we were seeing was that the traditional airline travel retail model has not changed for a long, long time,” shared Pok. In a sum, the model revolved around a sales catalogue, which isn’t updated for three months, and an inflight sales cart that is limited in space, Pok explained. There was a huge mismatch in demand and supply."
+text2 = "Pok’s career in SIA also included overseas stints in Australia, Indonesia, China and other locations, before he returned to Singapore in 2017. When KrisShop was established as a separate subsidiary in December 2018, Pok took on the role of CEO (or shopkeeper, as he indicates on his LinkedIn profile)."
+text5 = "To stand out in a competitive e-commerce landscape, KrisShop launched a series of concept stores, with products curated according to themes. The KrisShop@Home concept store, for example, was launched during the pandemic lockdown for shoppers to browse a selection of products catered towards elevating the stay-home experience."
+text4 = "In addition, the company has signed a three-year partnership with the Singapore Tourism Board to jointly market homegrown brands and grow their e-commerce reach. KrisShop.com is also the exclusive e-commerce platform for Design Orchard."
+textList = [text1,text2,text3,text4,text5]
+
+cv = CountVectorizer(stop_words="english", ngram_range=(2,2), max_features=10)
+cm = cv.fit_transform(textList)
+ca = cm.toarray()
+df = pd.DataFrame(data=ca,columns = cv.get_feature_names_out())
+print(df)
+print(cm.shape)
+
+tfidf = TfidfVectorizer(stop_words= 'english', ngram_range=(2,2), max_features=10)
+tm = tfidf.fit_transform(textList)
+ta = tm.toarray()
+df1 = pd.DataFrame(data=ta,columns = tfidf.get_feature_names())
+print(df1)
+print(tm.shape)
+
